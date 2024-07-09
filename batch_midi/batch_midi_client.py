@@ -21,7 +21,7 @@ class BatchMidiClient:
     def send(self, event: dict, timestamp: datetime, dryrun: bool = False) -> None:
         self._event_buffer.append((event, timestamp))
 
-    def write(self, out_dir: str) -> None:
+    def write(self, out_dir: str, prefix: str = "") -> None:
         outfile = mido.MidiFile()
         track = mido.MidiTrack()
         outfile.tracks.append(track)
@@ -58,4 +58,4 @@ class BatchMidiClient:
 
             now = e.tick
 
-        outfile.save(gen_filename(out_dir))
+        outfile.save(gen_filename(out_dir, prefix))
