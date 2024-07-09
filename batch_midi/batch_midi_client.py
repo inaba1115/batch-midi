@@ -1,0 +1,61 @@
+from dataclasses import dataclass
+from datetime import datetime
+
+import mido  # type: ignore
+
+from .util import gen_filename, second2tick
+
+
+@dataclass
+class MidiEvent:
+    typ: str
+    note: int
+    velo: int
+    tick: int
+
+
+class BatchMidiClient:
+    def __init__(self) -> None:
+        self._event_buffer: list[tuple[dict, datetime]] = []
+
+    def send(self, event: dict, timestamp: datetime, dryrun: bool = False) -> None:
+        self._event_buffer.append((event, timestamp))
+
+    def write(self, out_dir: str) -> None:
+        outfile = mido.MidiFile()
+        track = mido.MidiTrack()
+        outfile.tracks.append(track)
+
+        midi_events: list[MidiEvent] = []
+        for event, timestamp in self._event_buffer:
+            note = event["n"] + 60
+            velo = round(128 * event["amp"])
+            ts = timestamp.timestamp()
+            length = event["length"] if "length" in event else event["delta"]
+
+            midi_events.append(MidiEvent("note_on", note, velo, second2tick(ts)))
+            midi_events.append(MidiEvent("note_off", note, velo, second2tick(ts + length)))
+
+        on_notes: set = set()
+        now = -1
+        for e in sorted(midi_events, key=lambda e: e.tick):
+            if now < 0:
+                now = e.tick
+
+            if e.typ == "note_on":
+                if e.note in on_notes:
+                    track.append(mido.Message(type="note_off", note=e.note, velocity=0, time=e.tick - now))
+                    track.append(mido.Message(type="note_on", note=e.note, velocity=e.velo, time=0))
+                else:
+                    track.append(mido.Message(type="note_on", note=e.note, velocity=e.velo, time=e.tick - now))
+                    on_notes.add(e.note)
+            elif e.typ == "note_off":
+                if e.note in on_notes:
+                    track.append(mido.Message(type="note_off", note=e.note, velocity=e.velo, time=e.tick - now))
+                    on_notes.remove(e.note)
+                else:
+                    pass
+
+            now = e.tick
+
+        outfile.save(gen_filename(out_dir))
