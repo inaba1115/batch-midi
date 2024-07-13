@@ -28,13 +28,14 @@ class BatchMidiClient:
 
         midi_events: list[MidiEvent] = []
         for event, timestamp in self._event_buffer:
-            note = event["n"] + 60
+            octave = event["octave"] if "octave" in event else 5
+            note = event["n"] + 12 * octave
             velo = round(128 * event["amp"])
             ts = timestamp.timestamp()
-            length = event["length"] if "length" in event else event["delta"]
+            sustain = event["sustain"] if "sustain" in event else event["delta"]
 
             midi_events.append(MidiEvent("note_on", note, velo, second2tick(ts)))
-            midi_events.append(MidiEvent("note_off", note, velo, second2tick(ts + length)))
+            midi_events.append(MidiEvent("note_off", note, velo, second2tick(ts + sustain)))
 
         on_notes: set = set()
         now = -1
