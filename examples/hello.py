@@ -17,7 +17,7 @@ def main():
             "n": scale.bind([0, 1, 2, 3]),
             "amp": 0.5,
             "delta": 0.1,
-            "length": 0.3,
+            "sustain": 0.3,
         }
         sd.Pattern(client=client, params=params).play(tctx)
 
