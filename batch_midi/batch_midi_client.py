@@ -24,6 +24,7 @@ class BatchMidiClient:
     def write(self, out_dir: str, prefix: str = "") -> None:
         outfile = mido.MidiFile()
         track = mido.MidiTrack()
+        track.append(mido.MetaMessage("set_tempo", tempo=mido.bpm2tempo(120)))
         outfile.tracks.append(track)
 
         midi_events: list[MidiEvent] = []
