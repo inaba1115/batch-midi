@@ -30,7 +30,7 @@ class BatchMidiClient:
         for event, timestamp in self._event_buffer:
             octave = event["octave"] if "octave" in event else 5
             note = event["n"] + 12 * octave
-            velo = round(128 * event["amp"])
+            velo = round(127 * event["amp"])
             ts = timestamp.timestamp()
             sustain = event["sustain"] if "sustain" in event else event["delta"]
 
