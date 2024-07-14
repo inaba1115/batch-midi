@@ -24,13 +24,14 @@ class BatchMidiClient:
     def write(self, out_dir: str, prefix: str = "") -> None:
         outfile = mido.MidiFile()
         track = mido.MidiTrack()
+        track.append(mido.MetaMessage("set_tempo", tempo=mido.bpm2tempo(120)))
         outfile.tracks.append(track)
 
         midi_events: list[MidiEvent] = []
         for event, timestamp in self._event_buffer:
             octave = event["octave"] if "octave" in event else 5
             note = event["n"] + 12 * octave
-            velo = round(128 * event["amp"])
+            velo = round(127 * event["amp"])
             ts = timestamp.timestamp()
             sustain = event["sustain"] if "sustain" in event else event["delta"]
 
