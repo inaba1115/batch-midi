@@ -1,3 +1,4 @@
+import threading
 import typing
 from dataclasses import dataclass
 from datetime import datetime
@@ -22,6 +23,16 @@ class BatchMidiClient(sd.SuperDirtClient):
 
     def send(self, event: dict, timestamp: datetime, dryrun: bool = False) -> None:
         self._event_buffer.append((event, timestamp))
+
+
+class SyncBatchMidiClient(BatchMidiClient):
+    def __init__(self) -> None:
+        super().__init__()
+        self._lock = threading.Lock()
+
+    def send(self, event: dict, timestamp: datetime, dryrun: bool = False) -> None:
+        with self._lock:
+            self._event_buffer.append((event, timestamp))
 
 
 def write(client: typing.Any, out_dir: str, prefix: str = "") -> None:
