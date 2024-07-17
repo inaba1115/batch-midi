@@ -2,6 +2,7 @@ from dataclasses import dataclass
 from datetime import datetime
 
 import mido  # type: ignore
+import superdirtpy as sd
 
 from .util import gen_filename, second2tick
 
@@ -14,7 +15,7 @@ class MidiEvent:
     tick: int
 
 
-class BatchMidiClient:
+class BatchMidiClient(sd.SuperDirtClient):
     def __init__(self) -> None:
         self._event_buffer: list[tuple[dict, datetime]] = []
 
