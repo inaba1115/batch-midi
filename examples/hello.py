@@ -21,7 +21,7 @@ def main():
         }
         sd.Pattern(client=client, params=params).play(tctx)
 
-    client.write(out_dir, "hello")
+    bm.write(client, out_dir, "hello")
 
 
 if __name__ == "__main__":
