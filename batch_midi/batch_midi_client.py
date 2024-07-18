@@ -46,7 +46,7 @@ def write(client: typing.Any, out_dir: str, prefix: str = "") -> None:
 
     midi_events: list[MidiEvent] = []
     for event, timestamp in client._event_buffer:
-        if event.get("n") is None:
+        if event.get("n") is None:  # rest note
             continue
 
         octave = event["octave"] if "octave" in event else 5
