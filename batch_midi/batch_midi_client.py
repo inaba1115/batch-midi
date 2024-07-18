@@ -48,7 +48,7 @@ def write(client: typing.Any, out_dir: str, prefix: str = "") -> None:
     for event, timestamp in client._event_buffer:
         octave = event["octave"] if "octave" in event else 5
         note = event["n"] + 12 * octave
-        velo = round(127 * event["amp"])
+        velo = int(127 * event["amp"])
         ts = timestamp.timestamp()
         sustain = event["sustain"] if "sustain" in event else event["delta"]
 
