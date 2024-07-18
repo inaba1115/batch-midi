@@ -9,7 +9,7 @@ out_dir = "~/Desktop/"
 
 
 def main():
-    tctx = sd.TemporalContext(dryrun=True)
+    tctx = sd.TemporalContext(dryrun=dryrun)
     scale = sd.Scale(sd.PitchClass.C, sd.Scales.major)
 
     for _ in range(8):
