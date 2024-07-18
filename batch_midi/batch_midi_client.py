@@ -46,9 +46,12 @@ def write(client: typing.Any, out_dir: str, prefix: str = "") -> None:
 
     midi_events: list[MidiEvent] = []
     for event, timestamp in client._event_buffer:
+        if event.get("n") is None:
+            continue
+
         octave = event["octave"] if "octave" in event else 5
         note = event["n"] + 12 * octave
-        velo = int(127 * event["amp"])
+        velo = int(127 * event.get("amp", 0.5))
         ts = timestamp.timestamp()
         sustain = event["sustain"] if "sustain" in event else event["delta"]
 
