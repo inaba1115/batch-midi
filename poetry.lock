@@ -312,13 +312,13 @@ files = [
 
 [[package]]
 name = "superdirtpy"
-version = "0.5.0"
+version = "0.6.0"
 description = "superdirtpy is a client library for Super Dirt written in python."
 optional = false
 python-versions = "<4.0,>=3.12"
 files = [
-    {file = "superdirtpy-0.5.0-py3-none-any.whl", hash = "sha256:b629e8b06d8faf431aac73e2a8fded2d38f0fa3a4e8a6c2ac73ffd6c9b54d728"},
-    {file = "superdirtpy-0.5.0.tar.gz", hash = "sha256:9beafbc85be7917d47b4d1507a5e6e6d78b1f0bd18544d590da62e53011aeed7"},
+    {file = "superdirtpy-0.6.0-py3-none-any.whl", hash = "sha256:38de896b562d8ed98821af4d52dbc6425f879f96ce873a0341c67fc9b6f373c4"},
+    {file = "superdirtpy-0.6.0.tar.gz", hash = "sha256:b8d0c24edcfba8174671e371448f3a6886eebfa82f12d00fe9b8c9521e627151"},
 ]
 
 [package.dependencies]
@@ -338,4 +338,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.12"
-content-hash = "12b7007b83a499ca72cbf03c05b08cdd2d913675a8f7e69122fedafc2dca0271"
+content-hash = "c1db3d726c20814a44c916b2d8f8639511649fd99b26d5dba053c45e4a9eb59b"
