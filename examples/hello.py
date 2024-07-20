@@ -5,8 +5,7 @@ import batch_midi as bm
 # client = sd.SuperDirtClient()
 client = bm.BatchMidiClient()
 dryrun = isinstance(client, bm.BatchMidiClient)
-p = {"s": "mydevice", "midichan": 0}
-out_dir = "~/Desktop/"
+p = {"s": "superpiano"}
 
 
 def main():
@@ -22,8 +21,7 @@ def main():
         }
         sd.Pattern(client=client, params=params).play(tctx)
 
-    bm.write(client, out_dir, "hello")
-
 
 if __name__ == "__main__":
     main()
+    bm.write(client, "~/Desktop/", "hello")
