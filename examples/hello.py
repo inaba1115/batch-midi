@@ -2,8 +2,9 @@ import superdirtpy as sd
 
 import batch_midi as bm
 
-# client, dryrun = sd.SuperDirtClient(), False
-client, dryrun = bm.BatchMidiClient(), True
+# client = sd.SuperDirtClient()
+client = bm.BatchMidiClient()
+dryrun = isinstance(client, bm.BatchMidiClient)
 p = {"s": "mydevice", "midichan": 0}
 out_dir = "~/Desktop/"
 
